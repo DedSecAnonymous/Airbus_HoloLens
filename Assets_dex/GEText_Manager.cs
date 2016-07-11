@@ -10,7 +10,7 @@ public class GEText_Manager : MonoBehaviour {
     Text text;
     // Use this for initialization
     void Start () {
-        string url = "http://192.168.137.31:9000/api/comments";
+        string url = "http://httpbin.org/get";
         WWW www = new WWW(url);
         StartCoroutine(WaitForRequest(www));
         text = GetComponent<Text>();
@@ -43,7 +43,7 @@ public class GEText_Manager : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log(getreq.ToString());
-        text.text = "DATA: " + getreq.ToString()[14];
+        //Debug.Log(getreq.ToString());
+        text.text = "DATA: " + getreq.ToString();
     }
 }
