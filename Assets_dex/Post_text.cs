@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 
@@ -48,7 +48,7 @@ public class Post_text : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
+   // Update is called once per frame
     void Update () {
 	
 	}
