@@ -36,9 +36,9 @@ public class TextChange : MonoBehaviour {
         //check for errors
         if(get.error == null)
         {
-            Debug.Log("Ohhh Yeahhh!-> " + get.text);
-            Debug.Log(getreq.ToString());
-            text.text ="Data: "+ getreq.ToString()[14];
+            //Debug.Log("Ohhh Yeahhh!-> " + get.text);
+            //Debug.Log(getreq.ToString());
+            text.text ="Data: "+ getreq.ToString().Substring(0,20);
         }
         else
         {
