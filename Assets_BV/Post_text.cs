@@ -24,9 +24,9 @@ public class Post_text : MonoBehaviour {
 
         //handling post request
         //handling the post req via post url
-        string url = "http://httpbin.org/post";
+        string url = "http://10.42.0.1:9000/api/comments";
         WWWForm form = new WWWForm();
-        form.AddField("var1", posttext);
+        form.AddField("content", posttext);
         //form.AddField("var2", "value2");
         WWW www = new WWW(url, form);
 

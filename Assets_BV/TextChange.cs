@@ -9,7 +9,7 @@ using System.IO;
 public class TextChange : MonoBehaviour {
 
     // Use this for initialization
-    WWW get;
+    public WWW get;
     public static string getreq;
     Text text;
 
@@ -17,21 +17,46 @@ public class TextChange : MonoBehaviour {
     {
         //string url = "http://192.168.137.31:9000/api/comments";
         //get = new WWW(url);
-        StartCoroutine(WaitForRequest());
+        //StartCoroutine(GET());
+        //getData();
         text = GetComponent <Text> ();
 	}
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        //StartCoroutine(GET());
+        //getData();
         StartCoroutine(WaitForRequest());
 
     }
+
+    void getData()
+    {
+        float num = UnityEngine.Random.Range(-10.0f, 10.0f);
+        string url = "http://10.42.0.1:9000/api/comments?t="+num.ToString();
+        get = new WWW(url);
+        while(!get.isDone)
+        {
+            Debug.Log("In while loop for loading data");
+        }
+        getreq = get.text;
+        Debug.Log("To be parsed: " + getreq.ToString());
+        string json = @getreq;
+        List<MyJSC> data = JsonConvert.DeserializeObject<List<MyJSC>>(json);
+        int l = data.Count;
+        Debug.Log("Latest Data: " + data[l - 1].content);
+        text.text = " Data1: " + data[l - 1].content + "\n Data2: " + data[l-2].content;
+        get = null;
+        //Debug.Log("Printing get after setting it to null: "+get.text);
+    }
+
     private IEnumerator WaitForRequest()
     {
-
-        string url = "http://10.42.0.1:9000/api/comments";
+        float num = UnityEngine.Random.Range(-10.0f, 10.0f);
+        string url = "http://10.42.0.1:9000/api/comments?t=" + num.ToString();
+        //string url = "http://10.42.0.1:9000/api/comments";
         WWW get = new WWW(url);
         yield return get;        
         getreq = get.text;        
