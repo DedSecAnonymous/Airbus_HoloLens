@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
 
 public class TextChange : MonoBehaviour {
 
@@ -21,31 +24,45 @@ public class TextChange : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        /*string url = "http://192.168.137.31:9000/api/comments";
-        get = new WWW(url);*/
+        
         StartCoroutine(WaitForRequest());
-        //text.text = "Data: " + get.text;
 
     }
     private IEnumerator WaitForRequest()
     {
-        string url = "http://httpbin.org/get";
+
+        string url = "http://10.42.0.1:9000/api/comments";
         WWW get = new WWW(url);
-        yield return get;
-        getreq = get.text;
+        yield return get;        
+        getreq = get.text;        
+        //getreq = File.ReadAllText(@"\Data\data.json");
+        //yield return getreq;
         //check for errors
-        if(get.error == null)
+        if (get.error == null)
         {
             //Debug.Log("Ohhh Yeahhh!-> " + get.text);
             //Debug.Log(getreq.ToString());
-            text.text ="Data: "+ getreq.ToString().Substring(0,20);
+            Debug.Log("To be parsed: " + getreq.ToString());
+            string json = @getreq;
+            List<MyJSC> data = JsonConvert.DeserializeObject<List<MyJSC>>(json);
+            int l = data.Count;
+            Debug.Log("Latest Data: " + data[l - 1].content);
+            text.text = "Data: " + data[l - 1].content;
         }
         else
         {
-            Debug.Log("Dayumn!-> "+get.error);
+            Debug.Log("Dayumn!-> " + get.error);
         }
-    }
+        
+    }  
+    
+}
 
-    
-    
+public class MyJSC
+{
+    public string _id;
+    public string author;
+    public string content;
+    public string _v;
+    public string date;
 }
